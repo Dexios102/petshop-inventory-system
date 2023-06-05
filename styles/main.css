@@ -13,6 +13,8 @@ body {
     background-color: #f7fafc;
 }
 
-.user-drop {
+#dropdown-user {
+    position: absolute;
     top: 4rem;
+    right: 2rem;
 }
