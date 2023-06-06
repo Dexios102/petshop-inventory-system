@@ -54,19 +54,19 @@
                      id="dropdown-user">
                      <div class="px-4 py-3" role="none">
                         <p class="text-sm text-gray-900" role="none">
-                           Dexter Dave Cajayon
+                           <?php echo $_SESSION['fullname'] ?>
                         </p>
                         <p class="text-sm font-medium text-gray-900 truncate" role="none">
-                           dexterdave.cajayon.1121@gmail.com
+                           <?php echo $_SESSION['email'] ?>
                         </p>
                      </div>
                      <ul class="py-1" role="none">
                         <li>
-                           <a href="index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                           <a href="../index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                               role="menuitem">Dashboard</a>
                         </li>
                         <li>
-                           <a href="components/auth/login.html"
+                           <a href="../controls/logout.php"
                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign
                               out</a>
                         </li>
@@ -94,7 +94,7 @@
                </a>
             </li>
             <li>
-               <a href="products.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="products.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true"
                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                      fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +106,7 @@
                </a>
             </li>
             <li>
-               <a href="inventory.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true"
                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                      fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -282,7 +282,7 @@
          <form method="POST" enctype="multipart/form-data">   
             <div class="mb-4">
                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
-               <input type="file" id="image" name="image"
+               <input type="file" id="image" name="image" accept="image/png, image/gif, image/jpeg"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
             </div>
             <div class="mb-4">

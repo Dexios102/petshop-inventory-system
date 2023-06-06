@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php
-   include 'resources/includes/session.php';
-?>
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Dashboard</title>
-   <link rel="stylesheet" href="styles/main.css">
-   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+   <title>Products</title>
+   <link rel="stylesheet" href="../styles/main.css">
+   <script src="https://cdn.tailwindcss.com"></script>
    <script type="text/javascript" src="../node_modules/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+   <link href="/dist/output.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
+   <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
       <div class="px-3 py-3 lg:px-5 lg:pl-3">
          <div class="flex items-center justify-between">
             <div class="flex items-center justify-start">
@@ -32,7 +32,7 @@
                   </svg>
                </button>
                <a href="../index.html" class="flex ml-2 md:mr-24">
-                  <img src="resources/images/098cfa107b3fa97496db3f892419d5fc.png" class="h-12 w-12 mr-3"
+                  <img src="../resources/images/098cfa107b3fa97496db3f892419d5fc.png" class="h-12 w-12 mr-3"
                      alt="Petshop Logo" />
                   <span class="self-center text-xl font-bold sm:text-2xl whitespace-nowrap">Petshop
                      Inventory</span>
@@ -45,7 +45,7 @@
                         class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
                         aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleDropdown()">
                         <span class="sr-only">Open user menu</span>
-                        <img class="w-8 h-8 rounded-full" src="resources/images/icon-256x256.png" alt="user photo">
+                        <img class="w-8 h-8 rounded-full" src="../resources/images/icon-256x256.png" alt="user photo">
                      </button>
                   </div>
                   <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow"
@@ -60,11 +60,11 @@
                      </div>
                      <ul class="py-1" role="none">
                         <li>
-                           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                           <a href="../index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                               role="menuitem">Dashboard</a>
                         </li>
                         <li>
-                           <a href="components/auth/login.html"
+                           <a href="../controls/logout.php"
                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign
                               out</a>
                         </li>
@@ -82,7 +82,7 @@
       <div class="h-full px-2 pb-4 overflow-y-auto">
          <ul class="space-y-6 font-medium">
             <li>
-               <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="../index.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                      fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                      <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
@@ -92,7 +92,7 @@
                </a>
             </li>
             <li>
-               <a href="app/products.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true"
                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                      fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +104,7 @@
                </a>
             </li>
             <li>
-               <a href="app/inventory.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="inventory.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true"
                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                      fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -157,126 +157,51 @@
          </ul>
       </div>
    </aside>
-
    <div class="p-10 sm:ml-64">
       <div class="container items-center px-1 py-10 m-auto mt-5">
-         <div class="flex flex-wrap pb-3 mx-4 md:mx-24 lg:mx-0">
-            <div class="w-full p-2 lg:w-1/4 md:w-1/2">
-               <div class="flex flex-col px-6 py-10 overflow-hidden bg-white rounded-xl shadow-lg duration-300 group">
-                  <div class="flex flex-row justify-between items-center">
-                     <div class="px-4 py-4 bg-gray-300  rounded-xl bg-opacity-30">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                           <path fill-rule="evenodd"
-                              d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-                              clip-rule="evenodd" />
-                           <path fill-rule="evenodd"
-                              d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-                              clip-rule="evenodd" />
-                        </svg>
-                     </div>
-                  </div>
-                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12">45 Pets</h1>
-                  <div class="flex flex-row justify-between ">
-                     <p>Pets</p>
-                     <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 " viewBox="0 0 20 20"
-                           fill="currentColor">
-                           <path fill-rule="evenodd"
-                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                              clip-rule="evenodd" />
-                        </svg>
-                     </span>
-                  </div>
-               </div>
+         <h1 class="text-3xl font-bold text-gray-600 uppercase tracking-wide">
+            Products Data</h1>
+          <div class="flex flex-row flex-wrap gap-20">
+            <?php
+               include '../controls/conn.php';
+               $select = "SELECT * FROM tbl_inventory";
+               $selectstatement = $pdo -> query($select);
+               $result = $selectstatement->fetchAll(PDO::FETCH_ASSOC);
+               if ($result) {
+                  foreach ($result as $r) {
+                     ?>
+                        <div
+                           class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow mt-8">
+                           <a href="#">
+                              <img class="p-8 rounded-t-lg" src="<?php echo "../controls/media/".$r['img'] ?>" alt="product image" />
+                           </a>
+                           <div class="px-5 pb-5">
+                              <a href="#">
+                                 <h2 class="text-2xl font-bold tracking-tight text-gray-900"><?php echo $r['product_name'] ?></h2>
+                              </a>
+                              <p class="pb-5">- <?php echo $r['description'] ?></p>
+                              <div class="flex items-center justify-between">
+                                 <span class="text-3xl font-bold text-gray-900"><?php echo "₱ ".$r['price'] ?></span>
+                                 <div>
+                                    <a href="#"
+                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    Edit</a>
+                                    <a href="#"
+                                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    Remove</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     <?php
+                  }
+               }
+            ?>
             </div>
-            <div class="w-full p-2 lg:w-1/4 md:w-1/2">
-               <div class="flex flex-col px-6 py-10 overflow-hidden bg-white rounded-xl shadow-lg duration-300 group">
-                  <div class="flex flex-row justify-between items-center">
-                     <div class="px-4 py-4 bg-gray-300  rounded-xl bg-opacity-30">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                           <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
-                        </svg>
-                     </div>
-                  </div>
-                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12">71 Products</h1>
-                  <div class="flex flex-row justify-between">
-                     <p>Products</p>
-                     <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" viewBox="0 0 20 20"
-                           fill="currentColor">
-                           <path fill-rule="evenodd"
-                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                              clip-rule="evenodd" />
-                        </svg>
-                     </span>
-                  </div>
-               </div>
-            </div>
-            <div class="w-full p-2 lg:w-1/4 md:w-1/2">
-               <div class="flex flex-col px-6 py-10 overflow-hidden bg-white  rounded-xl shadow-lg duration-300  group">
-                  <div class="flex flex-row justify-between items-center">
-                     <div class="px-4 py-4 bg-gray-300  rounded-xl bg-opacity-30">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                           <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                           <path fill-rule="evenodd"
-                              d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                              clip-rule="evenodd" />
-                        </svg>
-                     </div>
-                  </div>
-                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12">15 Orders</h1>
-                  <div class="flex flex-row justify-between">
-                     <p>Orders</p>
-                     <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" viewBox="0 0 20 20"
-                           fill="currentColor">
-                           <path fill-rule="evenodd"
-                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                              clip-rule="evenodd" />
-                        </svg>
-                     </span>
-                  </div>
-               </div>
-            </div>
-            <div class="w-full p-2 lg:w-1/4 md:w-1/2">
-               <div class="flex flex-col px-6 py-10 overflow-hidden bg-white rounded-xl shadow-lg duration-300 group">
-                  <div class="flex flex-row justify-between items-center">
-                     <div class="px-4 py-4 bg-gray-300  rounded-xl bg-opacity-30">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                           <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                              clip-rule="evenodd" />
-                        </svg>
-                     </div>
-                  </div>
-                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12">+20.5%
-                  </h1>
-                  <div class="flex flex-row justify-between">
-                     <p>Sales</p>
-                     <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" viewBox="0 0 20 20"
-                           fill="currentColor">
-                           <path fill-rule="evenodd"
-                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                              clip-rule="evenodd" />
-                        </svg>
-                     </span>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-
-      <div class="container mx-auto p-4 flex flex-row items-center justify-center">
-         <div id="lineChart" class="w-full h-64"></div>
-         <div id="pieChart" class="w-full h-64 mt-8 flex justify-center items-center"></div>
       </div>
    </div>
 
-   <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.26.0"></script>
-
 </body>
-
-<script src="./function/dropdown-user.js"></script>
-<script src="./function/pie-chart.js"></script>
+<script src="../function/dropdown-user.js"></script>
 
 </html>
