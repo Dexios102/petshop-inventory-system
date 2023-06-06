@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php 
+   include '../controls/inventory/inventory_con.php';
+?>
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -82,7 +84,7 @@
       <div class="h-full px-2 pb-4 overflow-y-auto">
          <ul class="space-y-6 font-medium">
             <li>
-               <a href="../index.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="../index.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                      fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                      <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
@@ -206,52 +208,66 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr class="bg-gray-100 border-b hover:bg-gray-200 text-center">
-                     <td class="w-32 p-4">
-                        <img
-                           src="https://cdn.shopify.com/s/files/1/0424/0254/5818/products/large_pedigree-dry-adult-chicken-and-vegatables-flavour-636510995953656278.png?v=1598407670"
-                           alt="Product Image">
-                     </td>
-                     <td class="px-6 py-4 font-semibold text-gray-900">
-                        Shabu ng aso
-                     </td>
-                     <td class="px-6 py-4 font-semibold text-gray-900">
-                        Eto ay pangpakalma ng putanginang aso</td>
-                     <td class="px-6 py-4 pl-10">
-                        <div class="flex items-center space-x-3">
-                           <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300
-                        rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200"
-                              type="button">
-                              <span class="sr-only">Quantity button</span>
-                              <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                 <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                    clip-rule="evenodd"></path>
-                              </svg>
-                           </button>
-                           <div>
-                              <input type="number" id="first_product" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg 
-                           focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1" placeholder="1" required>
-                           </div>
-                           <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none
-                        hover:bg-gray-100 focus:ring-4 focus:ring-gray-200" type="button">
-                              <span class="sr-only">Quantity button</span>
-                              <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                 <path fill-rule="evenodd"
-                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                    clip-rule="evenodd"></path>
-                              </svg>
-                           </button>
-                        </div>
-                     </td>
-                     <td class="px-6 py-4 font-semibold text-gray-900">
-                        $599
-                     </td>
-                     <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-red-600 hover:underline">Remove</a>
-                     </td>
-                  </tr>
+               <?php
+                  $select = "SELECT * FROM tbl_inventory";
+                  $selectstatement = $pdo -> query($select);
+                  $result = $selectstatement->fetchAll(PDO::FETCH_ASSOC);
+                  if ($result) {
+                     foreach ($result as $r) {
+                           ?>
+                              <tr class="bg-gray-100 border-b hover:bg-gray-200 text-center">
+                                 <td class="w-32 p-4">
+                                    <img
+                                       src="<?php echo "../controls/media/".$r['img'] ?>"
+                                       alt="Product Image">
+                                 </td>
+                                 <td class="px-6 py-4 font-semibold text-gray-900">
+                                    <?php echo $r['product_name'] ?>
+                                 </td>
+                                 <td class="px-6 py-4 font-semibold text-gray-900">
+                                    <?php echo $r['description'] ?>
+                                 </td>
+                                 <td class="px-6 py-4 pl-10">
+                                    <div class="flex items-center space-x-3">
+                                       <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300
+                                    rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200"
+                                          type="button">
+                                          <span class="sr-only">Quantity button</span>
+                                          <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                             <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                                clip-rule="evenodd"></path>
+                                          </svg>
+                                       </button>
+                                       <div>
+                                          <input type="number" id="first_product" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                                       focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1" placeholder="1" value="<?php echo $r['quantity'] ?>" required>
+                                       </div>
+                                       <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none
+                                    hover:bg-gray-100 focus:ring-4 focus:ring-gray-200" type="button">
+                                          <span class="sr-only">Quantity button</span>
+                                          <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                             <path fill-rule="evenodd"
+                                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                                clip-rule="evenodd"></path>
+                                          </svg>
+                                       </button>
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 font-semibold text-gray-900">
+                                    <?php echo "₱".$r['price'] ?>
+                                 </td>
+                                 <td class="px-6 py-4">
+                                    <a href="#" class="font-medium text-red-600 hover:underline">Remove</a>
+                                 </td>
+                              </tr>
+                           <?php
+                           }
+                     }
+                     
+                  
+               ?>
                </tbody>
             </table>
          </div>
@@ -262,7 +278,8 @@
    <div id="modal" class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-50 hidden">
       <div class="bg-white rounded shadow-lg p-8">
          <h2 class="text-2xl font-bold mb-4">Add Product</h2>
-         <form>
+         <?php echo $msg ?>
+         <form method="POST" enctype="multipart/form-data">   
             <div class="mb-4">
                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
                <input type="file" id="image" name="image"
@@ -270,7 +287,7 @@
             </div>
             <div class="mb-4">
                <label for="productName" class="block text-gray-700 text-sm font-bold mb-2">Product Name:</label>
-               <input type="text" id="productName" name="productName"
+               <input type="text" id="productName" name="product_name"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
             </div>
             <div class="mb-4">
@@ -289,7 +306,7 @@
                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
             </div>
             <div class="flex justify-end gap-2">
-               <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+               <button type="submit" name="save" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                   Save
                </button>
                <button type="button" id="closeButton"
