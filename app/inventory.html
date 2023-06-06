@@ -76,9 +76,9 @@
    </nav>
 
    <aside id="logo-sidebar"
-      class="fixed top-0 left-2 z-40 w-60 h-screen pt-28 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0"
+      class="fixed top-0 left-0 z-40 w-60 h-screen pt-28 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0"
       aria-label="Sidebar">
-      <div class="h-full px-3 pb-4 overflow-y-auto bg-">
+      <div class="h-full px-2 pb-4 overflow-y-auto bg-">
          <ul class="space-y-6 font-medium">
             <li>
                <a href="../index.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
@@ -162,71 +162,149 @@
          <h1 class="text-3xl font-bold text-green-600 uppercase tracking-wide mb-5">
             Inventory Data</h1>
 
-         
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-   <table class="w-full text-sm text-left text-gray-500">
-       <thead class="text-xs text-white uppercase bg-green-500">
-           <tr>
-               <th scope="col" class="px-6 py-3">
-                   <span class="sr-only">Image</span>
-               </th>
-               <th scope="col" class="px-6 py-3">
-                   Product
-               </th>
-               <th scope="col" class="px-6 py-3">
-                   Qty
-               </th>
-               <th scope="col" class="px-6 py-3">
-                   Price
-               </th>
-               <th scope="col" class="px-6 py-3">
-                   Action
-               </th>
-           </tr>
-       </thead>
-       <tbody>
-           <tr class="bg-white border-b hover:bg-gray-50">
-               <td class="w-32 p-4">
-                   <img src="https://cdn.shopify.com/s/files/1/0424/0254/5818/products/large_pedigree-dry-adult-chicken-and-vegatables-flavour-636510995953656278.png?v=1598407670" alt="Product Image">
-               </td>
-               <td class="px-6 py-4 font-semibold text-gray-900">
-                   Shabu ng aso
-               </td>
-               <td class="px-6 py-4">
-                   <div class="flex items-center space-x-3">
-                       <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300
-                        rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200" type="button">
-                           <span class="sr-only">Quantity button</span>
-                           <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                       </button>
-                       <div>
-                           <input type="number" id="first_product" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg 
+            <div class="mb-5">
+               <button id="addButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                 Add
+               </button>
+             </div>
+         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500">
+               <thead class="text-xs text-white uppercase bg-green-500">
+                  <tr>
+                     <th scope="col" class="px-6 py-3">
+                        <span class="sr-only">Image</span>
+                     </th>
+                     <th scope="col" class="px-6 py-3">
+                        Product
+                     </th>
+                     <th scope="col" class="px-6 py-3">
+                        Description
+                     </th>
+                     <th scope="col" class="px-6 py-3">
+                        Qty
+                     </th>
+                     <th scope="col" class="px-6 py-3">
+                        Price
+                     </th>
+                     <th scope="col" class="px-6 py-3">
+                        Action
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr class="bg-white border-b hover:bg-gray-50">
+                     <td class="w-32 p-4">
+                        <img
+                           src="https://cdn.shopify.com/s/files/1/0424/0254/5818/products/large_pedigree-dry-adult-chicken-and-vegatables-flavour-636510995953656278.png?v=1598407670"
+                           alt="Product Image">
+                     </td>
+                     <td class="px-6 py-4 font-semibold text-gray-900">
+                        Shabu ng aso
+                     </td>
+                     <td class="px-6 py-4 font-semibold text-gray-900">
+                        Eto ay pangpakalma ng putanginang aso</td>
+                     <td class="px-6 py-4">
+                        <div class="flex items-center space-x-3">
+                           <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300
+                        rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200"
+                              type="button">
+                              <span class="sr-only">Quantity button</span>
+                              <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                 <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                    clip-rule="evenodd"></path>
+                              </svg>
+                           </button>
+                           <div>
+                              <input type="number" id="first_product" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg 
                            focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1" placeholder="1" required>
-                       </div>
-                       <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none
+                           </div>
+                           <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none
                         hover:bg-gray-100 focus:ring-4 focus:ring-gray-200" type="button">
-                           <span class="sr-only">Quantity button</span>
-                           <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                       </button>
-                   </div>
-               </td>
-               <td class="px-6 py-4 font-semibold text-gray-900">
-                   $599
-               </td>
-               <td class="px-6 py-4">
-                   <a href="#" class="font-medium text-red-600 hover:underline">Remove</a>
-               </td>
-           </tr>
-       </tbody>
-   </table>
-</div>
+                              <span class="sr-only">Quantity button</span>
+                              <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                 <path fill-rule="evenodd"
+                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                    clip-rule="evenodd"></path>
+                              </svg>
+                           </button>
+                        </div>
+                     </td>
+                     <td class="px-6 py-4 font-semibold text-gray-900">
+                        $599
+                     </td>
+                     <td class="px-6 py-4">
+                        <a href="#" class="font-medium text-red-600 hover:underline">Remove</a>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
 
       </div>
    </div>
 
+    <!-- Modal -->
+  <div id="modal" class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-500 bg-opacity-50 hidden">
+   <div class="bg-white rounded shadow-lg p-8">
+     <h2 class="text-2xl font-bold mb-4">Add Product</h2>
+     <form>
+       <div class="mb-4">
+         <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
+         <input type="file" id="image" name="image" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+       </div>
+       <div class="mb-4">
+         <label for="productName" class="block text-gray-700 text-sm font-bold mb-2">Product Name:</label>
+         <input type="text" id="productName" name="productName" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+       </div>
+       <div class="mb-4">
+         <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+         <textarea id="description" name="description" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+       </div>
+       <div class="mb-4">
+         <label for="quantity" class="block text-gray-700 text-sm font-bold mb-2">Quantity:</label>
+         <input type="number" id="quantity" name="quantity" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+       </div>
+       <div class="mb-4">
+         <label for="price" class="block text-gray-700 text-sm font-bold mb-2">Price:</label>
+         <input type="number" id="price" name="price" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+       </div>
+       <div class="flex justify-end gap-2">
+         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+           Save
+         </button>
+         <button type="button" id="closeButton" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+            Close
+          </button>
+       </div>
+     </form>
+   </div>
+ </div>
+
 </body>
 <script src="../function/dropdown-user.js"></script>
+<script>
+   const addButton = document.getElementById('addButton');
+   const modal = document.getElementById('modal');
+   const closeButton = document.getElementById('closeButton');
+
+   addButton.addEventListener('click', () => {
+     modal.classList.remove('hidden');
+     document.body.classList.add('modal-active');
+   });
+
+   closeButton.addEventListener('click', () => {
+     modal.classList.add('hidden');
+     document.body.classList.remove('modal-active');
+   });
+
+   document.addEventListener('click', (event) => {
+     if (!modal.contains(event.target) && !event.target.matches('#addButton')) {
+       modal.classList.add('hidden');
+       document.body.classList.remove('modal-active');
+     }
+   });
+ </script>
 
 </html>
