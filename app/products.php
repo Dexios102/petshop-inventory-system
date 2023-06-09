@@ -14,6 +14,7 @@ include '../resources/includes/products_validate.php';
    <script type="text/javascript" src="../node_modules/tw-elements/dist/js/tw-elements.umd.min.js"></script>
    <link href="/dist/output.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -113,17 +114,18 @@ include '../resources/includes/products_validate.php';
             ?>
                   <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow mt-8">
                      <a href="#">
-                        <img class="p-8 rounded-t-lg" src="<?php echo "../controls/media/" . $r['img'] ?>" alt="product image" />
+                        <img class="p-8 rounded-t-lg w-96 h-96" src="<?php echo "../controls/media/" . $r['img'] ?>" alt="product image" />
                      </a>
                      <div class="px-5 pb-5">
                         <a href="#">
-                           <h2 class="text-2xl font-bold tracking-tight text-gray-900"><?php echo $r['product_name'] ?></h2>
+                           <h2 id="proName<?php echo $r['inv_id'] ?>" class="text-2xl font-bold tracking-tight text-gray-900"><?php echo $r['product_name'] ?></h2>
                         </a>
                         <p class="pb-5">- <?php echo $r['description'] ?></p>
+                        Available stocks:<p class="pb-5" id="stocks<?php echo $r['inv_id'] ?>">  <?php echo $r['quantity'] ?></p>
                         <div class="flex items-center justify-between">
-                           <span class="text-3xl font-bold text-gray-900"><?php echo "₱ " . $r['price'] ?></span>
+                           <span class="text-3xl font-bold text-gray-900">₱ <span id="price<?php echo $r['inv_id'] ?>" class="text-3xl font-bold text-gray-900"><?php echo $r['price'] ?></span></span>
                            <div>
-                              <button type="button" id="buyButton" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                              <button type="button" onclick="byProd(<?php echo $r['inv_id'] ?>)" id="buyButton" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                  Buy
                               </button>
                            </div>
@@ -142,6 +144,7 @@ include '../resources/includes/products_validate.php';
       <div class="flex items-center justify-center min-h-screen p-4">
          <div class="bg-gray-100 border-black rounded-lg max-w-lg p-6">
             <h2 class="text-2xl font-bold mb-4">Product Details</h2>
+            <div id="productid" class="mb-2 hidden"></div>
             <div id="productName" class="mb-2"></div>
             <div id="quantity" class="mb-2"></div>
             <div id="price" class="mb-2"></div>
@@ -158,37 +161,67 @@ include '../resources/includes/products_validate.php';
 </body>
 <script src="../function/dropdown-user.js"></script>
 <script>
-   // Get the necessary elements
-   const buyButton = document.getElementById('buyButton');
+   //const buyButton = document.getElementById('buyButton');
    const modal = document.getElementById('modal');
    const closeButton = document.getElementById('closeButton');
    const confirmButton = document.getElementById('confirmButton');
+   const productid = document.getElementById('productid');
    const productNameElement = document.getElementById('productName');
    const quantityElement = document.getElementById('quantity');
    const priceElement = document.getElementById('price');
    const totalPriceElement = document.getElementById('totalPrice');
 
-   buyButton.addEventListener('click', () => {
+   function byProd(id) {
       const quantityInput = prompt('Enter the quantity you want to buy:');
+      const stocks = document.getElementById('stocks'+id).innerHTML;
       const quantity = parseInt(quantityInput, 10);
       if (isNaN(quantity) || quantity <= 0) {
          alert('Please enter a valid quantity.');
          return;
       }
-      const productName = 'Product Name'; 
-      const price = 9.99; 
+      else if(quantity > stocks){
+         alert('Insufficient Stocks');
+         return;
+      }
+      const productName = document.getElementById('proName'+id).innerHTML; 
+      const price = document.getElementById('price'+id).innerHTML;  
       const totalPrice = quantity * price;
 
-      productNameElement.textContent = `Product Name: ${productName}`;
-      quantityElement.textContent = `Quantity: ${quantity}`;
-      priceElement.textContent = `Price per unit: $${price}`;
-      totalPriceElement.textContent = `Total Price: $${totalPrice}`;
+      productid.textContent = `${id}`;
+      productNameElement.textContent = `${productName}`;
+      quantityElement.textContent = `${quantity}`;
+      priceElement.textContent = `₱ ${price}`;
+      totalPriceElement.textContent = `₱ ${totalPrice}`;
       modal.classList.remove('hidden');
-   });
+   };
 
    confirmButton.addEventListener('click', () => {
-      alert('Purchase confirmed. Thank you for your order.');
-      modal.classList.add('hidden');
+      var name = '<?php echo $_SESSION['fullname'] ?>'
+      var email = '<?php echo $_SESSION['email'] ?>'
+      var id = document.getElementById('productid').innerHTML;
+      var product_name = document.getElementById('productName').innerHTML;
+      var quantity = document.getElementById('quantity').innerHTML;
+      var price = document.getElementById('price').innerHTML;
+      var total = document.getElementById('totalPrice').innerHTML;
+
+      $.ajax({
+         url: '../controls/orders/add_order.php',
+         type: 'POST',
+         data: {
+            id: id,
+            name: name,
+            email: email,
+            product: product_name,
+            quantity: quantity,
+            price: price,
+            total: total
+         },
+         cache: false,
+         success: function(msg){
+            alert('Purchase confirmed. Thank you for your order.');
+            modal.classList.add('hidden');
+         }
+      })
    });
 
    closeButton.addEventListener('click', () => {
