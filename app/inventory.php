@@ -2,6 +2,7 @@
 <html lang="en">
 <?php 
    include '../controls/inventory/inventory_con.php';
+   include '../resources/includes/inventory_validate.php';
 ?>
 <head>
    <meta charset="UTF-8">
@@ -13,6 +14,7 @@
    <script type="text/javascript" src="../node_modules/tw-elements/dist/js/tw-elements.umd.min.js"></script>
    <link href="/dist/output.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -94,18 +96,6 @@
                </a>
             </li>
             <li>
-               <a href="products.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
-                  <svg aria-hidden="true"
-                     class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
-                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                     <path
-                        d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
-                     </path>
-                  </svg>
-                  <span class="flex-1 ml-5 whitespace-nowrap">Products</span>
-               </a>
-            </li>
-            <li>
                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true"
                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
@@ -129,18 +119,6 @@
                         clip-rule="evenodd"></path>
                   </svg>
                   <span class="flex-1 ml-5 whitespace-nowrap">Orders</span>
-               </a>
-            </li>
-            <li>
-               <a href="report.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
-                  <svg aria-hidden="true"
-                     class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
-                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                     <path fill-rule="evenodd"
-                        d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                        clip-rule="evenodd"></path>
-                  </svg>
-                  <span class="flex-1 ml-5 whitespace-nowrap">Report</span>
                </a>
             </li>
             <li>
@@ -229,7 +207,7 @@
                                  </td>
                                  <td class="px-6 py-4 pl-10">
                                     <div class="flex items-center space-x-3">
-                                       <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300
+                                       <button onclick="deductProd('<?php echo $r['inv_id'] ?>')" class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300
                                     rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200"
                                           type="button">
                                           <span class="sr-only">Quantity button</span>
@@ -240,10 +218,12 @@
                                           </svg>
                                        </button>
                                        <div>
-                                          <input type="number" id="first_product" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg 
-                                       focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1" placeholder="1" value="<?php echo $r['quantity'] ?>" required>
+                                          <div
+                                          id="first_product_<?php echo $r['inv_id'] ?>" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                                          focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1" 
+                                          > <?php echo $r['quantity'] ?> </div>
                                        </div>
-                                       <button class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none
+                                       <button onclick="addProd('<?php echo $r['inv_id'] ?>')" class="inline-flex items-center p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none
                                     hover:bg-gray-100 focus:ring-4 focus:ring-gray-200" type="button">
                                           <span class="sr-only">Quantity button</span>
                                           <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -259,7 +239,7 @@
                                     <?php echo "₱".$r['price'] ?>
                                  </td>
                                  <td class="px-6 py-4">
-                                    <a href="#" class="font-medium text-red-600 hover:underline">Remove</a>
+                                    <a href="../controls/inventory/delete_inventory.php?a=<?php echo $r['inv_id'] ?>" class="font-medium text-red-600 hover:underline">Remove</a>
                                  </td>
                               </tr>
                            <?php
@@ -273,7 +253,46 @@
          </div>
       </div>
    </div>
+         <script>
+            function addProd(id){
+               var prod_input = document.getElementById('first_product_'+id).innerHTML;
+               new_val = prod_input;
+               new_val++
+               document.getElementById('first_product_'+id).innerHTML = new_val;
 
+               $.ajax({
+                  url: '../controls/inventory/update_inventory.php',
+                  type: 'POST',
+                  data: {
+                        id: id,
+                        quantity: new_val
+                  },
+                  cache: false,
+                  success: function(){
+                     document.getElementById('first_product_'+id).innerHTML = new_val;
+                  }
+               })
+            }
+
+            function deductProd(id){
+               var prod_input = document.getElementById('first_product_'+id).innerHTML;
+               new_val = prod_input;
+               new_val--
+
+               $.ajax({
+                  url: '../controls/inventory/update_inventory.php',
+                  type: 'POST',
+                  data: {
+                        id: id,
+                        quantity: new_val
+                  },
+                  cache: false,
+                  success: function(){
+                     document.getElementById('first_product_'+id).innerHTML = new_val;
+                  }
+               })
+            }
+         </script>
    <!-- Modal -->
    <div id="modal" class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-50 hidden">
       <div class="bg-white rounded shadow-lg p-8">

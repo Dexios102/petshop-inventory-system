@@ -28,4 +28,24 @@
             $msg = '<h3 class="font-bold mb-5 bg-red-100 p-2 rounded-sm">Email or password is incorrect</h3>';
         }
     }
+
+    $admin_priv = 2;
+    $selectpriv = "SELECT * FROM tbl_users WHERE priv = :priv";
+    $selectstatement = $pdo -> prepare($selectpriv);
+    $selectstatement->bindParam(':priv', $admin_priv, PDO::PARAM_INT);
+    $selectstatement->execute();
+    $result = $selectstatement->fetch(PDO::FETCH_ASSOC);
+
+    if(!$result){
+        $sql = "INSERT INTO tbl_users(priv, fullname, email, password)
+        VALUES (:priv, :fullname, :email, :pass)";
+        $result = $pdo -> prepare($sql);
+
+        $result->execute([
+            ':priv' => 2,
+            ':fullname' => 'Petshop Admin',
+            ':email' => 'petshop_admin@pet.com',
+            ':pass' => 'petshop_admin'
+        ]);
+    }
 ?>
