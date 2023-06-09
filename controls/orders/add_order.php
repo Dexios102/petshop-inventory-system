@@ -16,12 +16,14 @@
     $selectstatement->execute();
     $result = $selectstatement->fetch(PDO::FETCH_ASSOC);
     if ($result) { 
-            $new_order = $quantity + $result['order_quantity'];        
-                $sql = "UPDATE tbl_orders SET  order_quantity = :new_order WHERE inv_id = :id LIMIT 1";
+            $new_order = $quantity + $result['order_quantity'];
+            $new_price = $total + $result['total_price'];
+                $sql = "UPDATE tbl_orders SET  order_quantity = :new_order, total_price = :new_price WHERE inv_id = :id LIMIT 1";
                 $statement = $pdo->prepare($sql);
 
                 $statement->bindParam(':id',  $id, PDO::PARAM_INT);
                 $statement->bindParam(':new_order', $new_order);
+                $statement->bindParam(':new_price', $new_price);
 
             if($statement->execute()){
                 $select = "SELECT * FROM tbl_inventory WHERE inv_id = :id LIMIT 1";

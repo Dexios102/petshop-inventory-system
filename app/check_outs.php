@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php session_start() ?>
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,7 +68,7 @@
       <div class="h-full px-2 pb-4 overflow-y-auto">
          <ul class="space-y-6 font-medium">
             <li>
-               <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="products.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                      <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
                      </path>
@@ -85,7 +85,7 @@
                </a>
             </li>
             <li>
-               <a href="components/auth/login.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="../controls/logout.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                      <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
                   </svg>
@@ -125,43 +125,64 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr class="bg-white border-b hover:bg-gray-50"">
-                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                        Apple MacBook Pro 17"
-                     </th>
-                     <td class="px-6 py-4">
-                        1
-                     </td>
-                     <td class="px-6 py-4">
-                        $2999
-                     </td>
-                     <td class="px-6 py-4">
-                        $7999
-                     </td>
-                     <td class="px-6 py-4">
-                        Ongoing
-                     </td>
-                     <td class="px-6 py-4 text-center">
-                        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
-                         focus:ring-blue-300 font-medium rounded-lg
-                          text-sm px-5 py-2.5 text-center">
-                           Recieved
-                        </button>
-                     </td>
-                  </tr>
+                  <?php
+                     include '../controls/conn.php';
+                     $myemail = $_SESSION['email'];
+                     $select = "SELECT * FROM tbl_orders WHERE email = '$myemail'";
+                     $selectstatement = $pdo->query($select);
+                     $result = $selectstatement->fetchAll(PDO::FETCH_ASSOC);
+
+                     if ($result) {
+                        foreach($result as $r){
+                           ?>
+                            <tr class="bg-white border-b hover:bg-gray-50"">
+                              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                 <?php echo $r['product_name'] ?>
+                              </th>
+                              <td class="px-6 py-4">
+                              <?php echo $r['order_quantity'] ?>
+                              </td>
+                              <td class="px-6 py-4">
+                                 ₱ <?php echo $r['price_perunit'] ?>
+                              </td>
+                              <td class="px-6 py-4">
+                                 ₱ <?php echo $r['total_price'] ?>
+                              </td>
+                              <td class="px-6 py-4">
+                                 <?php echo $r['status'] ?>
+                              </td>
+                              <td class="px-6 py-4 text-center">
+                                 <?php
+                                    if($r['status'] == 'Approved'){
+                                       ?>
+                                          <a href="../controls/orders/received_order.php?a=<?php echo $result['order_id'] ?>"> <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+                                          focus:ring-blue-300 font-medium rounded-lg
+                                          text-sm px-5 py-2.5 text-center">
+                                             Recieved
+                                          </button></a>
+                                       <?php
+                                    }
+                                    else{
+                                       ?>
+                                         <button type="button" class=" text-white focus:ring-4 focus:outline-none
+                                          focus:ring-blue-300 font-medium rounded-lg
+                                          text-sm px-5 py-2.5 text-center disabled bg-gray-200">
+                                             Recieved
+                                          </button>
+                                       <?php
+                                    }
+                                 ?>
+                              </td>
+                           </tr>
+                           <?php
+                        }
+                     }
+                  ?>
                </tbody>
-               <tfoot>
-                  <tr class="font-semibold text-gray-900">
-                     <td colspan="4"></td>
-                     <th scope="row" class="px-6 py-3 text-base text-right">Total</th>
-                     <td class="px-6 py-3 text-center">21,000</td>
-                  </tr>
-               </tfoot>
             </table>
          </div>
 
       </div>
    </div>
 </body>
-
 </html>

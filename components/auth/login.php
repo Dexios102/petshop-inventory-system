@@ -29,7 +29,6 @@
               <button type="submit" name="login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Sign In
               </button>
-              <a href="./forgot.html" class="text-blue-500 text-sm">Forgot Password?</a>
             </div>
           </form>
           <div class="mt-4 text-center">

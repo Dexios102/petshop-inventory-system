@@ -9,7 +9,7 @@
    <link href="/dist/output.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
+<?php session_start(); ?>
 <body>
    <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
       <div class="px-3 py-3 lg:px-5 lg:pl-3">
@@ -49,19 +49,19 @@
                      id="dropdown-user">
                      <div class="px-4 py-3" role="none">
                         <p class="text-sm text-gray-900" role="none">
-                           Dexter Dave Cajayon
+                           <?php echo $_SESSION['fullname']; ?>
                         </p>
                         <p class="text-sm font-medium text-gray-900 truncate" role="none">
-                           dexterdave.cajayon.1121@gmail.com
+                           <?php echo $_SESSION['email'] ?>
                         </p>
                      </div>
                      <ul class="py-1" role="none">
                         <li>
-                           <a href="index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                           <a href="../index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                               role="menuitem">Dashboard</a>
                         </li>
                         <li>
-                           <a href="components/auth/login.html"
+                           <a href="../controls/logout.php"
                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign
                               out</a>
                         </li>
@@ -79,7 +79,7 @@
       <div class="h-full px-2 pb-4 overflow-y-auto">
          <ul class="space-y-6 font-medium">
             <li>
-               <a href="../index.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="../index.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                      fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                      <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
@@ -89,7 +89,7 @@
                </a>
             </li>
             <li>
-               <a href="inventory.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="inventory.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true"
                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                      fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +104,7 @@
                </a>
             </li>
             <li>
-               <a href="orders.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true"
                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                      fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +115,7 @@
                </a>
             </li>
             <li>
-               <a href="components/auth/login.html"
+               <a href="../controls/logout.php"
                   class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true"
                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
@@ -160,9 +160,6 @@
                         Buyer
                      </th>
                      <th scope="col" class="px-6 py-3">
-                        Product Image
-                     </th>
-                     <th scope="col" class="px-6 py-3">
                         Product Name
                      </th>
                      <th scope="col" class="px-6 py-3">
@@ -180,75 +177,66 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr class="bg-white border-b hover:bg-gray-50">
-                     <td class="px-6 py-4 text-left">
-                        <div class="font-bold">Dexter Dave Cajayon</div>
-                        <div>dexterdave.cajayon.1121@gmail.com</div>
-                      </td>
-                     <td class="w-4 p-4">
-                        <img class="w-15 h-15" src="https://cdn.shopify.com/s/files/1/2141/9909/products/marlboro-ice-blast.png?v=1591901941"
-                           alt="Jese image">
-                     </td>
-                     <td class="px-6 py-4">
-                       Dog Cigar
-                     </td>
-                     <td class="px-6 py-4">
-                        23
-                     </td>
-                     <td class="px-6 py-4 font-bold">
-                        ₱ 500
-                     </td>
-                     <td class="px-6 py-4">
-                        <div class="flex items-center pl-20">
-                           <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Ongoing
-                        </div>
-                     </td>
-                     <td class="py-10 flex flex-row gap-4 justify-center items-center">
-                        <a href="#" class="font-medium text-blue-600 hover:underline" id="openModalButton">Edit</a>
-                        <a href="#" class="font-medium text-green-600 hover:underline">Approved</a>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-
-      </div>
-   </div>
-
-   <!-- Modal -->
+                  <?php
+                      include '../controls/conn.php';
+                      $select = "SELECT * FROM tbl_orders";
+                      $selectstatement = $pdo->query($select);
+                      $result = $selectstatement->fetchAll(PDO::FETCH_ASSOC);
+                      if($result){
+                        foreach($result as $r){
+                           ?>
+                           <td class="px-6 py-4 text-left">
+                              <div class="font-bold"><?php echo $r['name'] ?></div>
+                              <div><?php echo $r['email'] ?></div>
+                           </td>
+                           <td class="px-6 py-4">
+                           <?php echo $r['product_name'] ?>
+                           </td>
+                           <td class="px-6 py-4">
+                           <?php echo $r['order_quantity'] ?>
+                           </td>
+                           <td class="px-6 py-4 font-bold">
+                              ₱ <?php echo $r['total_price'] ?>
+                           </td>
+                           <td class="px-6 py-4">
+                              <div class="flex items-center pl-20">
+                                 <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> <?php echo $r['status'] ?>
+                              </div>
+                           </td>
+                           <td class="py-10 flex flex-row gap-4 justify-center items-center">
+                              <a href="#" class="font-medium text-blue-600 hover:underline" id="openModalButton">Edit</a>
+                           </td>
+                        </tr>
+                           <!-- Modal -->
   <div id="modal" class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-500 bg-opacity-50 hidden">
    <div class="bg-white rounded shadow-lg p-8 w-96">
      <h2 class="text-2xl font-bold mb-4">Update Order</h2>
      <div class="mb-4">
        <label for="buyer" class="block text-gray-700 text-sm font-bold mb-2">Buyer:</label>
-       <p id="buyer" class="bg-gray-100 px-3 py-2 rounded">{buyer}</p>
-     </div>
-     <div class="mb-4">
-       <label for="productImage" class="block text-gray-700 text-sm font-bold mb-2">Product Image:</label>
-       <p id="productImage" class="bg-gray-100 px-3 py-2 rounded">{productImage}</p>
+       <p id="buyer" class="bg-gray-100 px-3 py-2 rounded"><?php echo $r['name'] ?></p>
      </div>
      <div class="mb-4">
        <label for="productName" class="block text-gray-700 text-sm font-bold mb-2">Product Name:</label>
-       <p id="productName" class="bg-gray-100 px-3 py-2 rounded">{productName}</p>
+       <p id="productName" class="bg-gray-100 px-3 py-2 rounded"><?php echo $r['product_name'] ?></p>
      </div>
      <div class="mb-4">
       <label for="productName" class="block text-gray-700 text-sm font-bold mb-2">Product Price:</label>
-      <p id="productName" class="bg-gray-100 px-3 py-2 rounded">{productPrice}</p>
+      <p id="productName" class="bg-gray-100 px-3 py-2 rounded">₱ <?php echo $r['price_perunit'] ?></p>
     </div>
      <div class="mb-4">
        <label for="quantity" class="block text-gray-700 text-sm font-bold mb-2">Quantity:</label>
-       <input type="number" id="quantity" name="quantity" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+       <input type="text" readonly id="quantity" value="<?php echo $r['order_quantity'] ?>" name="quantity" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
      </div>
      <div class="mb-4">
        <label for="totalPrice" class="block text-gray-700 text-sm font-bold mb-2">Total Price:</label>
-       <p id="totalPrice" class="bg-gray-100 px-3 py-2 rounded">{totalPrice}</p>
+       <p id="totalPrice" class="bg-gray-100 px-3 py-2 rounded">₱ <?php echo $r['total_price'] ?></p>
      </div>
+     <form method="POST" action="../controls/orders/order_stat.php?a=<?php echo $r['order_id'] ?>">
      <div class="mb-4">
        <label for="orderStatus" class="block text-gray-700 text-sm font-bold mb-2">Order Status:</label>
        <select id="orderStatus" name="orderStatus" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
          <option value="Pending">Pending</option>
-         <option value="Processing">Processing</option>
-         <option value="Shipped">Done</option>
+         <option value="Approved">Approved</option>
        </select>
      </div>
      <div class="flex justify-between">
@@ -259,8 +247,20 @@
          Update Order
        </button>
      </div>
+     </form>
    </div>
  </div>
+                           <?php
+                        }
+                      }
+                  ?>
+                  <tr class="bg-white border-b hover:bg-gray-50">
+               </tbody>
+            </table>
+         </div>
+
+      </div>
+   </div>
 
 </body>
 <script src="../function/dropdown-user.js"></script>
@@ -286,6 +286,31 @@
        }
      }
    });
+
+   
+   const openModalButton = document.getElementById('openModalButton');
+   const closeModalButton = document.getElementById('closeModalButton');
+   const modal = document.getElementById('modal');
+   const quantityInput = document.getElementById('quantity');
+   const totalPriceText = document.getElementById('totalPrice');
+   const orderStatusSelect = document.getElementById('orderStatus');
+  
+
+
+   const openModal = () => {
+     modal.classList.remove('hidden');
+     document.body.classList.add('modal-active');
+   };
+
+   const closeModal = () => {
+     modal.classList.add('hidden');
+     document.body.classList.remove('modal-active');
+   };
+
+   openModalButton.addEventListener('click', openModal);
+   closeModalButton.addEventListener('click', closeModal);
+   quantityInput.addEventListener('input', updateTotalPrice);
+   orderStatusSelect.addEventListener('change', updateOrderStatus);
  </script>
 
 

@@ -89,7 +89,7 @@ include '../resources/includes/products_validate.php';
                </a>
             </li>
             <li>
-               <a href="components/auth/login.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="../controls/logout.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                      <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
                   </svg>
@@ -147,8 +147,8 @@ include '../resources/includes/products_validate.php';
             <div id="productid" class="mb-2 hidden"></div>
             <div id="productName" class="mb-2"></div>
             <div id="quantity" class="mb-2"></div>
-            <div id="price" class="mb-2"></div>
-            <div id="totalPrice" class="font-bold"></div>
+           <div class="mb-2">₱ <span id="price" ></span></div> 
+           <div class="font-bold">₱ <span id="totalPrice" ></span></div> 
             <button id="confirmButton" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                Confirm Purchase
             </button>
@@ -190,8 +190,8 @@ include '../resources/includes/products_validate.php';
       productid.textContent = `${id}`;
       productNameElement.textContent = `${productName}`;
       quantityElement.textContent = `${quantity}`;
-      priceElement.textContent = `₱ ${price}`;
-      totalPriceElement.textContent = `₱ ${totalPrice}`;
+      priceElement.textContent = `${price}`;
+      totalPriceElement.textContent = `${totalPrice}`;
       modal.classList.remove('hidden');
    };
 

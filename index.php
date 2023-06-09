@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+   include 'controls/conn.php';
    include 'resources/includes/session.php';
 ?>
 <head>
@@ -107,7 +108,7 @@
                </a>
             </li>
             <li>
-               <a href="app/orders.html" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
+               <a href="app/orders.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 pl-7">
                   <svg aria-hidden="true"
                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                      fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -137,25 +138,28 @@
    <div class="p-10 sm:ml-64">
       <div class="container items-center px-1 py-10 m-auto mt-5">
          <div class="flex flex-wrap pb-3 mx-4 md:mx-24 lg:mx-0">
-            <div class="w-full p-2 lg:w-1/4 md:w-1/2">
+         <div class="w-full p-2 lg:w-1/4 md:w-1/2">
                <div class="flex flex-col px-6 py-10 overflow-hidden bg-white rounded-xl shadow-lg duration-300 group">
                   <div class="flex flex-row justify-between items-center">
                      <div class="px-4 py-4 bg-gray-300  rounded-xl bg-opacity-30">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                           <path fill-rule="evenodd"
-                              d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-                              clip-rule="evenodd" />
-                           <path fill-rule="evenodd"
-                              d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-                              clip-rule="evenodd" />
+                           <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
                         </svg>
                      </div>
                   </div>
-                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12">45 Pets</h1>
-                  <div class="flex flex-row justify-between ">
-                     <p>Pets</p>
+                  <?php
+                     include 'controls/conn.php';
+
+                     $select = "SELECT COUNT(*) as count FROM tbl_inventory";
+                     $selectstatement = $pdo->query($select);
+                     $result = $selectstatement->fetch(PDO::FETCH_ASSOC);
+                     $count = $result['count'];
+                  ?>
+                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12"><?php echo $count ?> Products</h1>
+                  <div class="flex flex-row justify-between">
+                     <p>Products</p>
                      <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 " viewBox="0 0 20 20"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" viewBox="0 0 20 20"
                            fill="currentColor">
                            <path fill-rule="evenodd"
                               d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
@@ -174,9 +178,15 @@
                         </svg>
                      </div>
                   </div>
-                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12">71 Products</h1>
+                  <?php
+                     $select = "SELECT COUNT(*) as count FROM tbl_orders WHERE status = 'Pending'";
+                     $selectstatement = $pdo->query($select);
+                     $result = $selectstatement->fetch(PDO::FETCH_ASSOC);
+                     $count = $result['count'];
+                  ?>
+                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12"><?php echo $count ?> Pending</h1>
                   <div class="flex flex-row justify-between">
-                     <p>Products</p>
+                     <p>Pending</p>
                      <span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" viewBox="0 0 20 20"
                            fill="currentColor">
@@ -200,7 +210,13 @@
                         </svg>
                      </div>
                   </div>
-                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12">15 Orders</h1>
+                  <?php
+                      $select = "SELECT COUNT(*) as count FROM tbl_orders WHERE status = 'Approved'";
+                     $selectstatement = $pdo->query($select);
+                     $result = $selectstatement->fetch(PDO::FETCH_ASSOC);
+                     $count1 = $result['count'];
+                  ?>
+                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12"><?php echo $count1 ?> Orders</h1>
                   <div class="flex flex-row justify-between">
                      <p>Orders</p>
                      <span>
@@ -224,7 +240,13 @@
                         </svg>
                      </div>
                   </div>
-                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12">+20.5%
+                  <?php
+                      $select = "SELECT COUNT(*) as count FROM tbl_orders WHERE status = 'Received'";
+                     $selectstatement = $pdo->query($select);
+                     $result = $selectstatement->fetch(PDO::FETCH_ASSOC);
+                     $count2 = $result['count'];
+                  ?>
+                  <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12"><?php echo $count2 ?>
                   </h1>
                   <div class="flex flex-row justify-between">
                      <p>Sales</p>
@@ -243,7 +265,6 @@
       </div>
 
       <div class="container mx-auto p-4 flex flex-row items-center justify-center">
-         <div id="lineChart" class="w-full h-64"></div>
          <div id="pieChart" class="w-full h-64 mt-8 flex justify-center items-center"></div>
       </div>
    </div>
@@ -253,6 +274,58 @@
 </body>
 
 <script src="./function/dropdown-user.js"></script>
-<script src="./function/pie-chart.js"></script>
+<script >
+   document.addEventListener('DOMContentLoaded', function() {
+    // Pie Chart Data
+    var pieChartOptions = {
+        series: [
+         <?php
+            $select = "SELECT * FROM tbl_inventory";
+            $selectstatement = $pdo -> query($select);
+            $result = $selectstatement->fetchAll(PDO::FETCH_ASSOC);
+            if ($result) {
+               foreach ($result as $r) {
+                  echo $r['quantity'].",";
+               }
+            }   
+         ?>
+        ],
+        chart: {
+            width: 500,
+            type: 'pie',
+        },
+        labels: [
+         
+         <?php
+            $select = "SELECT * FROM tbl_inventory";
+            $selectstatement = $pdo -> query($select);
+            $result = $selectstatement->fetchAll(PDO::FETCH_ASSOC);
+            if ($result) {
+               foreach ($result as $r) {
+                  echo "'".$r['product_name']."',";
+               }
+            }   
+         ?>
+      
+      
+      ],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 300
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
+
+    var pieChart = new ApexCharts(document.querySelector('#pieChart'), pieChartOptions);
+    pieChart.render();
+});
+
+</script>
 
 </html>
